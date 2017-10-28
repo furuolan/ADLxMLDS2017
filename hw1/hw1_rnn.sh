@@ -1,0 +1,1 @@
+python model_predict.py model_rnn $1 $2
