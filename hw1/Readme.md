@@ -16,3 +16,10 @@
     bestmodel為要儲存的 model name～
 6. 40class.pkl 為phones 之 one hot encoding
 
+版本說明
+* numpy: 1.13.3
+* scipy: 0.19.1
+* scikit-learn: 0.19.0
+* tensorflow: 1.1.0
+* Keras: 2.0.8 
+* 會用到 'selu'
