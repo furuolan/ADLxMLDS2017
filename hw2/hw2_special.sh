@@ -1,0 +1,1 @@
+python hw2_special.py model $1 $2
