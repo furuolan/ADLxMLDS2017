@@ -159,7 +159,7 @@ learning_rate = 0.001
 
 ###input
 model_path = sys.argv[1]
-test_feat_path = sys.argv[2]
+test_feat_path = sys.argv[2] + "testing_data/feat/"
 output_csv = sys.argv[3]
 
 test_videos = ["5YJaS2Eswg0_22_26.avi.npy",
