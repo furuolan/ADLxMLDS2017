@@ -1,0 +1,1 @@
+python model_seq2seq_predict.py model $1 $2 $3
