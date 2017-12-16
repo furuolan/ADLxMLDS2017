@@ -169,25 +169,6 @@ class Agent_DQN(Agent):
 
         return s, q_values, model
 
-    def build_training_op(self, q_network_weights):
-        a = tf.placeholder(tf.int64, [None])
-        y = tf.placeholder(tf.float32, [None])
-
-        # Convert action to one hot vector
-        a_one_hot = tf.one_hot(a, self.num_actions, 1.0, 0.0)
-        q_value = tf.reduce_sum(tf.mul(self.q_values, a_one_hot), reduction_indices=1)
-
-        # Clip the error, the loss is quadratic when the error is in (-1, 1), and linear outside of that region
-        error = tf.abs(y - q_value)
-        quadratic_part = tf.clip_by_value(error, 0.0, 1.0)
-        linear_part = error - quadratic_part
-        loss = tf.reduce_mean(0.5 * tf.square(quadratic_part) + linear_part)
-
-        optimizer = tf.train.RMSPropOptimizer(LEARNING_RATE, momentum=MOMENTUM, epsilon=MIN_GRAD)
-        grad_update = optimizer.minimize(loss, var_list=q_network_weights)
-
-        return a, y, loss, grad_update
-
     def setup_summary(self):
         episode_total_reward = tf.Variable(0.)
         tf.summary.scalar(ENV_NAME + '/Total Reward/Episode', episode_total_reward)
