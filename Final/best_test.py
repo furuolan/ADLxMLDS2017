@@ -21,7 +21,6 @@ K.set_session(session)
 
 
 import numpy as np
-import pandas as pd
 import sys
 
 # In[3]:
@@ -1155,7 +1154,7 @@ judge_x = shicai(judge_x)
 
 heatmap_thresh = 0.5
 result_thresh = 0.5
-result = model.predict(judge_x)
+result = model.predict(judge_x,batch_size=1)
 [conv_outputs, predictions] = get_output([judge_x])
 for id in range(len(judge_x)):
     predict_classes = np.where(result[id]>result_thresh)[0]
