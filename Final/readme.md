@@ -1,5 +1,6 @@
 * Training
     * python best_train.py "datadir/" 
+    * "datadir/"：例如 nih-chest-xray/data/
 * Testing
     * python best_test.py 
 * 版本
