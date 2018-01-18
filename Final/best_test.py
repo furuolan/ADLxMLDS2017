@@ -8,6 +8,7 @@ from keras import backend as K
 import tensorflow as tf
 from GlobalLSE import GlobalLSEPooling2D
 import os
+import pickle as pkl
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 #config = tf.ConfigProto(device_count = {'CPU' : 2, 'GPU': 1})
 config = tf.ConfigProto()
@@ -25,66 +26,10 @@ import sys
 
 # In[3]:
 
-
-datadir = sys.argv[1]#"D:/Gary/nih-chest-xray/data/"
-image_dir = datadir + "images/"
-
-
-# In[4]:
-
-
-train_name_list = datadir+"train.txt"
-test_name_list = datadir+"test.txt"
-valid_name_list = datadir+"valid.txt"
-Data_Entry_2017_v2_dir = datadir+"Data_Entry_2017_v2.csv" 
-BBox_List_2017_dir = datadir+"BBox_List_2017.csv"
-
-
-# In[5]:
-
-
-Data_Entry_2017_v2 = pd.read_csv(Data_Entry_2017_v2_dir)
-
-
-# In[6]:
-
-
-df = pd.Series(v for v in Data_Entry_2017_v2['Finding Labels'].str.split('|'))
-
-
-# In[7]:
-
-
-#df.loc[(df["B"] > 50) & (df["C"] == 900), "A"].values
-
-Data_Entry_2017_v2 = Data_Entry_2017_v2.loc[np.logical_not(Data_Entry_2017_v2['Finding Labels'].str.contains('Consolidation') | Data_Entry_2017_v2['Finding Labels'].str.contains('Edema') |Data_Entry_2017_v2['Finding Labels'].str.contains('Emphysema') | Data_Entry_2017_v2['Finding Labels'].str.contains('Fibrosis') | Data_Entry_2017_v2['Finding Labels'].str.contains('Hernia') | Data_Entry_2017_v2['Finding Labels'].str.contains('Pleural_Thickening') | Data_Entry_2017_v2['Finding Labels'].str.contains('No Finding'))]
-
-
-# In[8]:
-
-
-Data_Entry_2017_v2 = Data_Entry_2017_v2.loc[Data_Entry_2017_v2['Finding Labels']!='No Finding']
-
-
-# In[9]:
-
-
-Data_Entry_2017_v2.shape
-
-
 # In[10]:
 
 
 # In[11]:
-
-
-label_for_codelist = Data_Entry_2017_v2["Finding Labels"]
-
-
-# In[12]:
-
-
-label_codelist = label_for_codelist.str.split('|')
 
 
 # In[13]:
@@ -95,39 +40,11 @@ from sklearn.preprocessing import MultiLabelBinarizer
 
 # In[14]:
 
-
-mlb = MultiLabelBinarizer()
-train_tag = mlb.fit_transform(label_codelist)
-
-
-# In[15]:
-
-
-label_codelist = pd.DataFrame(train_tag,index=Data_Entry_2017_v2['Image Index'])
-
-
-# In[16]:
-
+with open("mlb.pkl",'rb') as r:
+    mlb = pkl.load(r)
 
 mlb.classes_
 
-
-# In[17]:
-
-
-BBox_List_2017 = pd.read_csv(BBox_List_2017_dir)
-
-
-
-# In[19]:
-
-
-test_name = pd.read_csv(datadir+"test.txt", header= None)
-
-
-# In[20]:
-
-valid_name = pd.read_csv(datadir+"valid.txt", header= None)
 
 # In[23]:
 

@@ -1,7 +1,7 @@
 * Training
     * python best_train.py "datadir/" 
 * Testing
-    * python best_test.py "datadir/" 
+    * python best_test.py 
 * 版本
     * Anaconda 4.4.0
     * conda 4.3.21
